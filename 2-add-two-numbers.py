@@ -45,19 +45,54 @@ class Solution:
 
         return head.next
 
-solution = Solution()
-l1 = ListNode.of([2,4,3])
-l2 = ListNode.of([5,6,4])
-assert solution.addTwoNumbers(l1, l2).to_list() == [7, 0, 8]
+class Solution2(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
 
-l1 = ListNode.of([2,4])
-l2 = ListNode.of([5,6,4])
-assert solution.addTwoNumbers(l1, l2).to_list() == [7, 0, 5]
+        last = head = ListNode(0)
+        carry = 0
 
-l1 = ListNode.of([2,4])
-l2 = ListNode.of([5])
-assert solution.addTwoNumbers(l1, l2).to_list() == [7, 4]
+        while l1 or l2 or carry != 0:
+            if l1:
+                carry += l1.val
+                l1 = l1.next
+            if l2:
+                carry += l2.val
+                l2 = l2.next
+            last.next = ListNode(carry % 10)
+            last = last.next
+            carry = carry // 10
 
-l1 = ListNode.of([0])
-l2 = ListNode.of([0])
-assert solution.addTwoNumbers(l1, l2).to_list() == [0]
+        return head.next
+            
+import unittest
+
+class MyTests(unittest.TestCase):
+    # (l1, l2, result)
+    cases = (([2,4,3], [5,6,4], [7,0,8]),
+             ([2,4], [5,6,4], [7, 0, 5]),
+             ([2,4], [5], [7, 4]),
+             ([0], [0], [0]))
+
+    def setUp(self):
+        self.solution = Solution()
+
+    def test_2_add(self):
+        for case in self.cases:
+            l1, l2, result = case
+            n1 = ListNode.of(l1)
+            n2 = ListNode.of(l2)
+            res = ListNode.of(result)
+            self.assertEqual(self.solution.addTwoNumbers(n1, n2), res)
+
+class MyTests2(MyTests):
+    def setUp(self):
+        self.solution = Solution2()
+        
+
+if __name__ == '__main__':
+    unittest.main()
