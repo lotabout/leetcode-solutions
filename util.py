@@ -6,16 +6,22 @@ class ListNode(object):
         self.val = x
         self.next = None
 
-    def to_list(self):
+    def as_list(self):
         lst = []
         node = self
         while node is not None:
             lst.append(node.val)
             node = node.next
         return lst
+    
+    def __eq__(self, obj):
+        if isinstance(obj, ListNode):
+            return obj.val == self.val and obj.next == self.next
+        elif isinstance(obj, list):
+            return self.as_list() == obj
 
     def __repr__(self):
-        return str(self.to_list())
+        return "ListNode" + str(self.as_list())
 
     @staticmethod
     def of(lst):
