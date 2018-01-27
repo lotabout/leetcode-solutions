@@ -21,3 +21,22 @@ class Solution:
 lst = [1,1,2]
 solution = Solution()
 assert solution.majorityElement(lst) == 1
+
+
+# O(1) space
+# like two armies, one army take advantage in numbers
+
+class Solution2:
+    def majorityElement(self, nums):
+        ret = None
+        num = 0
+
+        for n in nums:
+            if num == 0:
+                ret = n
+                num = 1
+            elif ret == n:
+                num += 1
+            else:
+                num -= 1
+        return ret
