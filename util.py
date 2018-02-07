@@ -81,3 +81,17 @@ class TreeNode(object):
 
     def __repr__(self):
         return "TreeNode" + str(self.serialize())
+
+    def _equal_to(self, a, b):
+        if a is None and b is None:
+            return True
+        elif a is None or b is None:
+            return False
+        return a.val == b.val and self._equal_to(a.left, b.left) and self._equal_to(a.right, b.right)
+
+    def __eq__(self, obj):
+        if isinstance(obj, TreeNode):
+            return self._equal_to(self, obj)
+        elif isinstance(obj, list):
+            return TreeNode.of(obj) == self
+
