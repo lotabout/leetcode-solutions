@@ -68,7 +68,7 @@ class TreeNode(object):
         while idx < len(data):
             node = q.pop()
             left = data[idx]
-            right = data[idx+1]
+            right = data[idx+1] if idx+1 < len(data) else None
             idx += 2
             if left is not None:
                 node.left = TreeNode(left)
